@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Irrigation</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🌱 Soil Moisture Monitor</h2>
+
+    <h1 id="moisture">-- % 😊</h1>
+
+    <div class="info">
+        <p><b>Pump Status:</b> <span id="pump">OFF</span></p>
+        <p><b>Mode:</b> <span id="mode">AUTO</span></p>
+        <p><b>State:</b> <span id="state">IDLE</span></p>
+    </div>
+
+    <div class="buttons">
+
+        <button onclick="pumpOn()">ON</button>
+        <button onclick="pumpOff()">OFF</button>
+
+        <br><br>
+
+        <button onclick="autoMode()">AUTO</button>
+        <button onclick="manualMode()">MANUAL</button>
+
+    </div>
+
+    <div class="telemetry">
+
+        <p><b>Raw ADC:</b> <span id="raw">--</span></p>
+
+        <p><b>Filtered ADC:</b> <span id="filtered">--</span></p>
+
+        <p><b>Last Seen:</b> <span id="last_seen">--</span></p>
+
+    </div>
+
+    <h3>📊 Live Status</h3>
+
+    <pre id="statusBox">
+Waiting for Firebase...
+    </pre>
+
+</div>
+
+<script type="module" src="script.js"></script>
+
+</body>
+</html>

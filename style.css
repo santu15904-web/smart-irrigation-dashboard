@@ -1,0 +1,59 @@
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f8;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    text-align:center;
+}
+
+h2{
+    margin-top:10px;
+}
+
+h1{
+    font-size:72px;
+    margin:20px 0;
+}
+
+.info p{
+    font-size:22px;
+}
+
+.buttons{
+    margin-top:20px;
+}
+
+button{
+    padding:12px 25px;
+    margin:5px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.telemetry{
+    margin-top:25px;
+}
+
+#statusBox{
+    width:90%;
+    margin:auto;
+    text-align:left;
+    background:white;
+    border:1px solid #ccc;
+    border-radius:10px;
+    padding:15px;
+    height:220px;
+    overflow:auto;
+    font-size:14px;
+}
