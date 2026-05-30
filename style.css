@@ -1,59 +1,58 @@
 body{
-    font-family: Arial, sans-serif;
-    background:#f4f6f8;
+    font-family: 'Segoe UI', sans-serif;
+    background:#eef2f7;
     margin:0;
     padding:20px;
 }
 
 .container{
-    max-width:800px;
+    max-width:700px;
     margin:auto;
     text-align:center;
 }
 
 h2{
-    margin-top:10px;
+    margin-bottom:10px;
 }
 
 h1{
-    font-size:72px;
+    font-size:90px;
+    margin:10px 0;
+    font-weight:700;
+}
+
+.info{
+    background:white;
+    border-radius:16px;
+    padding:20px;
     margin:20px 0;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
 
 .info p{
-    font-size:22px;
+    font-size:24px;
+    margin:15px 0;
 }
 
 .buttons{
-    margin-top:20px;
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    margin:20px 0;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
 
 button{
-    padding:12px 25px;
-    margin:5px;
+    width:140px;
+    padding:14px;
+    margin:8px;
     border:none;
-    border-radius:8px;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:600;
     cursor:pointer;
-    font-size:16px;
+    background:#2563eb;
+    color:white;
 }
 
-button:hover{
-    opacity:0.9;
-}
-
-.telemetry{
-    margin-top:25px;
-}
-
-#statusBox{
-    width:90%;
-    margin:auto;
-    text-align:left;
-    background:white;
-    border:1px solid #ccc;
-    border-radius:10px;
-    padding:15px;
-    height:220px;
-    overflow:auto;
-    font-size:14px;
-}
+button
