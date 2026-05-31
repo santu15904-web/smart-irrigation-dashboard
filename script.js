@@ -40,6 +40,7 @@ let moistureHistory = [];
 let timeHistory = [];
 let sampleHistory = [];
 let lastLoggedTimestamp = "";
+let currentChartMode = "LIVE";
 
 const chartCtx = document.getElementById("moistureChart");
 
