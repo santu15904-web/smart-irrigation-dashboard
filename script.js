@@ -66,22 +66,24 @@ onValue(irrigationRef, (snapshot) => {
     const data = snapshot.val();
 
     if (!data) return;
-    console.log("Realtime DB callback fired");
-    console.log("About to write Firestore");
-    addDoc(
-      collection(firestore, "history"),
-      {
-          moisture: data.moisture,
-          raw_adc: data.raw,
-          filtered_adc: data.filtered,
-          pump: data.pump ? "ON" : "OFF",
-          mode: data.mode,
-          state: data.state,
-          timestamp: new Date()
-      }
-  )
-  .then(() => console.log("Firestore write OK"))
-  .catch(err => console.error(err));
+console.log("Realtime DB callback fired");
+
+console.log("About to write Firestore");
+
+addDoc(
+    collection(firestore, "history"),
+    {
+        moisture: data.moisture,
+        raw_adc: data.raw,
+        filtered_adc: data.filtered,
+        pump: data.pump ? "ON" : "OFF",
+        mode: data.mode,
+        state: data.state,
+        timestamp: new Date()
+    }
+)
+.then(() => console.log("Firestore write OK"))
+.catch(err => console.error("Firestore error:", err));
 
     /* Moisture */
 
