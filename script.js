@@ -80,6 +80,7 @@ async function loadHistory() {
     );
 
 }
+loadHistory();
 
 onValue(irrigationRef, (snapshot) => {
 
