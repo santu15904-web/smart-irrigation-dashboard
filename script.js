@@ -67,6 +67,8 @@ const irrigationRef = ref(db, "irrigation");
 async function loadHistory() {
 
     sampleHistory = [];
+    timeHistory = [];
+    moistureHistory = [];
 
     const q = query(
         collection(firestore, "history"),
@@ -93,6 +95,8 @@ async function loadHistory() {
             record.timestamp
                 .toDate()
                 .toLocaleTimeString();
+        timeHistory.unshift(timeString);
+        moistureHistory.unshift(record.moisture);
 
         sampleHistory.push({
             time: timeString,
@@ -121,6 +125,12 @@ async function loadHistory() {
         sampleHistory.length
     );
 }
+moistureChart.update();
+
+console.log(
+    "Chart history loaded:",
+    moistureHistory.length
+);
 loadHistory();
 
 onValue(irrigationRef, (snapshot) => {
