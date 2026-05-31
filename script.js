@@ -138,9 +138,10 @@ onValue(irrigationRef, (snapshot) => {
     const data = snapshot.val();
 
     if (!data) return;
-console.log("Realtime DB callback fired");
+    console.log("last_seen =", data.last_seen);
+    console.log("Realtime DB callback fired");
 
-console.log("About to write Firestore");
+    console.log("About to write Firestore");
 
 addDoc(
     collection(firestore, "history"),
