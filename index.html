@@ -11,25 +11,61 @@
 
 <div class="container">
 
-    <h2>🌱 Soil Moisture Monitor</h2>
+    <!-- Moisture Card -->
 
-    <h1 id="moisture">-- % 😊</h1>
+    <div class="moisture-card">
 
-    <div class="info">
-        <p><b>Pump Status:</b> <span id="pump">OFF</span></p>
-        <p><b>Mode:</b> <span id="mode">AUTO</span></p>
-        <p><b>State:</b> <span id="state">IDLE</span></p>
+        <h1>
+            <span id="emoji">😊</span>
+            <span id="moisture">--%</span>
+        </h1>
+
+        <p>Soil Moisture</p>
+
     </div>
 
-    <div class="telemetry">
-        <p><b>Raw ADC:</b> <span id="raw">--</span></p>
-        <p><b>Filtered ADC:</b> <span id="filtered">--</span></p>
-        <p><b>Last Seen:</b> <span id="last_seen">--</span></p>
+    <!-- Status + Controls -->
+
+    <div class="status-grid">
+
+        <div class="status-card">
+            <h3 id="pump">OFF</h3>
+            <p>Pump</p>
+        </div>
+
+        <div class="status-card">
+            <h3 id="mode">AUTO</h3>
+            <p>Mode</p>
+        </div>
+
+        <div class="status-card">
+            <h3 id="state">IDLE</h3>
+            <p>State</p>
+        </div>
+
+        <div class="status-card">
+
+            <p><b>Controls</b></p>
+
+            <button onclick="pumpOn()">ON</button>
+            <button onclick="pumpOff()">OFF</button>
+
+            <br>
+
+            <button onclick="autoMode()">AUTO</button>
+            <button onclick="manualMode()">MANUAL</button>
+
+        </div>
+
     </div>
+
+    <!-- Chart -->
 
     <h3>📈 Moisture Trend</h3>
 
     <canvas id="moistureChart"></canvas>
+
+    <!-- Table -->
 
     <h3>📋 Recent Samples</h3>
 
@@ -49,36 +85,23 @@
             </thead>
 
             <tbody id="samplesBody">
+
                 <tr>
-                    <td colspan="6">Waiting for data...</td>
+                    <td colspan="6">
+                        Waiting for data...
+                    </td>
                 </tr>
+
             </tbody>
 
         </table>
 
     </div>
 
-    <div class="buttons">
-
-        <button onclick="pumpOn()">ON</button>
-        <button onclick="pumpOff()">OFF</button>
-
-        <br><br>
-
-        <button onclick="autoMode()">AUTO</button>
-        <button onclick="manualMode()">MANUAL</button>
-
-    </div>
-
-    <h3>📊 Live Status</h3>
-
-    <pre id="statusBox">
-Waiting for Firebase...
-    </pre>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script type="module" src="script.js"></script>
 
 </body>
