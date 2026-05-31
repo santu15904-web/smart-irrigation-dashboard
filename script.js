@@ -277,6 +277,51 @@ async function loadEvents() {
         events.reverse().join("<br>");
 
 }
+async function load1HChart() {
+
+    const q = query(
+        collection(firestore, "history"),
+        orderBy("timestamp", "desc"),
+        limit(120)
+    );
+
+    const querySnapshot =
+        await getDocs(q);
+
+    timeHistory.length = 0;
+    moistureHistory.length = 0;
+
+    const records = [];
+
+    querySnapshot.forEach((doc) => {
+        records.push(doc.data());
+    });
+
+    records.reverse();
+
+    records.forEach((record) => {
+
+        const timeString =
+            record.timestamp
+                .toDate()
+                .toLocaleTimeString();
+
+        timeHistory.push(timeString);
+
+        moistureHistory.push(
+            record.moisture
+        );
+
+    });
+
+    moistureChart.update();
+
+    console.log(
+        "1H chart loaded:",
+        moistureHistory.length
+    );
+
+}
 loadHistory();
 loadStatistics();
 loadEvents();
@@ -391,6 +436,41 @@ onValue(irrigationRef, (snapshot) => {
     });
 
 });
+document.getElementById("liveTab")
+    .addEventListener("click", () => {
+
+        currentChartMode = "LIVE";
+
+        console.log("LIVE selected");
+
+    });
+
+document.getElementById("hourTab")
+    .addEventListener("click", () => {
+
+        currentChartMode = "1H";
+
+        console.log("1H selected");
+
+    });
+
+document.getElementById("dayTab")
+    .addEventListener("click", () => {
+
+        currentChartMode = "24H";
+
+        console.log("24H selected");
+
+    });
+
+document.getElementById("weekTab")
+    .addEventListener("click", () => {
+
+        currentChartMode = "7D";
+
+        console.log("7D selected");
+
+    });
 
 /* Controls */
 
