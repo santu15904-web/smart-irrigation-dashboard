@@ -204,8 +204,82 @@ async function loadStatistics() {
         "samples"
     );
 }
+async function loadEvents() {
+
+    const q = query(
+        collection(firestore, "history"),
+        orderBy("timestamp", "desc"),
+        limit(50)
+    );
+
+    const querySnapshot =
+        await getDocs(q);
+
+    const records = [];
+
+    querySnapshot.forEach((doc) => {
+        records.push(doc.data());
+    });
+
+    records.reverse();
+
+    const events = [];
+
+    for (let i = 1; i < records.length; i++) {
+
+        const prev = records[i - 1];
+        const curr = records[i];
+
+        const timeString =
+            curr.timestamp
+                .toDate()
+                .toLocaleTimeString();
+
+        if (prev.pump !== curr.pump) {
+
+            events.push(
+                `${timeString} - Pump ${curr.pump}`
+            );
+
+        }
+
+        if (prev.mode !== curr.mode) {
+
+            events.push(
+                `${timeString} - Mode ${curr.mode}`
+            );
+
+        }
+
+        if (prev.state !== curr.state) {
+
+            events.push(
+                `${timeString} - State ${curr.state}`
+            );
+
+        }
+
+    }
+
+    if (events.length === 0) {
+
+        document.getElementById(
+            "eventLog"
+        ).innerHTML =
+            "No events found";
+
+        return;
+    }
+
+    document.getElementById(
+        "eventLog"
+    ).innerHTML =
+        events.reverse().join("<br>");
+
+}
 loadHistory();
 loadStatistics();
+loadEvents();
 
 onValue(irrigationRef, (snapshot) => {
 
