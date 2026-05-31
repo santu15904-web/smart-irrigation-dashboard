@@ -56,3 +56,26 @@ button{
 }
 
 button
+.telemetry{
+    margin:20px 0;
+}
+
+#moistureChart{
+    width:100%;
+    height:350px !important;
+    background:white;
+    border-radius:16px;
+    padding:15px;
+    box-sizing:border-box;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom:20px;
+}
+
+#statusBox{
+    background:white;
+    border-radius:16px;
+    padding:15px;
+    text-align:left;
+    white-space:pre-wrap;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
