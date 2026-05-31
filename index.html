@@ -22,13 +22,9 @@
     </div>
 
     <div class="telemetry">
-
         <p><b>Raw ADC:</b> <span id="raw">--</span></p>
-
         <p><b>Filtered ADC:</b> <span id="filtered">--</span></p>
-
         <p><b>Last Seen:</b> <span id="last_seen">--</span></p>
-
     </div>
 
     <h3>📈 Moisture Trend</h3>
@@ -37,24 +33,30 @@
 
     <h3>📋 Recent Samples</h3>
 
-    <table id="samplesTable">
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Moisture</th>
-                <th>Raw</th>
-                <th>Filtered</th>
-                <th>Pump</th>
-                <th>Mode</th>
-            </tr>
-        </thead>
+    <div class="table-card">
 
-        <tbody id="samplesBody">
-            <tr>
-                <td colspan="6">Waiting for data...</td>
-            </tr>
-        </tbody>
-    </table>
+        <table id="samplesTable">
+
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Moisture</th>
+                    <th>Raw</th>
+                    <th>Filtered</th>
+                    <th>Pump</th>
+                    <th>Mode</th>
+                </tr>
+            </thead>
+
+            <tbody id="samplesBody">
+                <tr>
+                    <td colspan="6">Waiting for data...</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
 
     <div class="buttons">
 
