@@ -64,6 +64,22 @@ const moistureChart = new Chart(chartCtx, {
 });
 
 const irrigationRef = ref(db, "irrigation");
+async function loadHistory() {
+
+    const q = query(
+        collection(firestore, "history"),
+        orderBy("timestamp", "desc"),
+        limit(10)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    console.log(
+        "History records found:",
+        querySnapshot.size
+    );
+
+}
 
 onValue(irrigationRef, (snapshot) => {
 
