@@ -651,90 +651,22 @@ document.getElementById("dayTab")
 
     });
 
-async function load7DChart() {
+document.getElementById("weekTab")
+    .addEventListener("click", () => {
 
-    console.log("Entering load7DChart");
+        document.getElementById("chartTitle")
+            .textContent =
+            "📈 Moisture Trend - 7 Days";
 
-    const sevenDaysAgo = new Date();
+        currentChartMode = "7D";
 
-    sevenDaysAgo.setDate(
-        sevenDaysAgo.getDate() - 7
-    );
+        setActiveTab("weekTab");
 
-    const q = query(
-        collection(firestore, "history"),
-        where(
-            "timestamp",
-            ">=",
-            sevenDaysAgo
-        )
-    );
+        load7DChart();
 
-    const querySnapshot =
-        await getDocs(q);
-
-    timeHistory.length = 0;
-    moistureHistory.length = 0;
-
-    const buckets = {};
-
-    querySnapshot.forEach((doc) => {
-
-        const record = doc.data();
-
-        const dt =
-            record.timestamp.toDate();
-
-        const bucketKey =
-            dt.getMonth() + 1 +
-            "/" +
-            dt.getDate() +
-            " " +
-            dt.getHours()
-                .toString()
-                .padStart(2,"0") +
-            ":00";
-
-        if (!buckets[bucketKey]) {
-
-            buckets[bucketKey] = {
-                sum: 0,
-                count: 0
-            };
-
-        }
-
-        buckets[bucketKey].sum +=
-            Number(record.moisture);
-
-        buckets[bucketKey].count++;
+        console.log("7D selected");
 
     });
-
-    Object.keys(buckets)
-        .sort()
-        .forEach((key) => {
-
-            const avg =
-                buckets[key].sum /
-                buckets[key].count;
-
-            timeHistory.push(key);
-
-            moistureHistory.push(
-                avg.toFixed(1)
-            );
-
-        });
-
-    moistureChart.update();
-
-    console.log(
-        "7D chart loaded:",
-        moistureHistory.length
-    );
-
-}
 function setActiveTab(tabId) {
 
     document.getElementById("liveTab")
