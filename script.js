@@ -65,7 +65,8 @@ const moistureChart = new Chart(chartCtx, {
 
 const irrigationRef = ref(db, "irrigation");
 async function loadHistory() {
-  sampleHistory = [];
+
+    sampleHistory = [];
 
     const q = query(
         collection(firestore, "history"),
@@ -79,40 +80,46 @@ async function loadHistory() {
         "History records found:",
         querySnapshot.size
     );
-const tbody = document.getElementById("samplesBody");
 
-tbody.innerHTML = "";
+    const tbody = document.getElementById("samplesBody");
 
-querySnapshot.forEach((doc) => {
+    tbody.innerHTML = "";
 
-    const record = doc.data();
-    sampleHistory.push({
-    time: timeString,
-    moisture: record.moisture,
-    raw: record.raw_adc,
-    filtered: record.filtered_adc,
-    pump: record.pump,
-    mode: record.mode
-});
+    querySnapshot.forEach((doc) => {
 
-    const timeString =
-        record.timestamp
-            .toDate()
-            .toLocaleTimeString();
+        const record = doc.data();
 
-    tbody.innerHTML += `
-    <tr>
-        <td>${timeString}</td>
-        <td>${record.moisture}</td>
-        <td>${record.raw_adc}</td>
-        <td>${record.filtered_adc}</td>
-        <td>${record.pump}</td>
-        <td>${record.mode}</td>
-    </tr>
-    `;
+        const timeString =
+            record.timestamp
+                .toDate()
+                .toLocaleTimeString();
 
-});
+        sampleHistory.push({
+            time: timeString,
+            moisture: record.moisture,
+            raw: record.raw_adc,
+            filtered: record.filtered_adc,
+            pump: record.pump,
+            mode: record.mode
+        });
 
+        tbody.innerHTML += `
+        <tr>
+            <td>${timeString}</td>
+            <td>${record.moisture}</td>
+            <td>${record.raw_adc}</td>
+            <td>${record.filtered_adc}</td>
+            <td>${record.pump}</td>
+            <td>${record.mode}</td>
+        </tr>
+        `;
+
+    });
+
+    console.log(
+        "sampleHistory loaded:",
+        sampleHistory.length
+    );
 }
 loadHistory();
 
