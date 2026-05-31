@@ -6,79 +6,93 @@ body{
 }
 
 .container{
-    max-width:900px;
+    max-width:1100px;
     margin:auto;
+}
+
+/* Moisture Card */
+
+.moisture-card{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:20px;
     text-align:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
 
-h2{
-    margin-bottom:10px;
-}
-
-h1{
+.moisture-card h1{
+    margin:0;
     font-size:90px;
-    margin:10px 0;
-    font-weight:700;
 }
 
-.info{
-    background:white;
-    border-radius:16px;
-    padding:20px;
-    margin:20px 0;
-    box-shadow:0 4px 15px rgba(0,0,0,0.08);
-}
-
-.info p{
+.moisture-card p{
+    margin-top:10px;
     font-size:24px;
-    margin:15px 0;
+    color:#555;
 }
 
-.telemetry{
+/* Status Grid */
+
+.status-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr 2fr;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.status-card{
     background:white;
-    border-radius:16px;
+    border-radius:20px;
     padding:20px;
-    margin:20px 0;
+    text-align:center;
     box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
 
-.buttons{
-    background:white;
-    border-radius:16px;
-    padding:20px;
-    margin:20px 0;
-    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+.status-card h3{
+    margin:10px 0;
+    font-size:32px;
 }
 
-button{
-    width:140px;
-    padding:14px;
-    margin:8px;
+.status-card p{
+    margin:0;
+    color:#666;
+}
+
+/* Controls */
+
+.status-card button{
+    width:110px;
+    padding:12px;
+    margin:6px;
     border:none;
     border-radius:12px;
-    font-size:18px;
+    font-size:16px;
     font-weight:600;
     cursor:pointer;
     background:#2563eb;
     color:white;
 }
 
+/* Chart */
+
 #moistureChart{
     width:100%;
-    height:350px !important;
+    height:400px !important;
     background:white;
-    border-radius:16px;
-    padding:15px;
+    border-radius:20px;
+    padding:20px;
     box-sizing:border-box;
     box-shadow:0 4px 15px rgba(0,0,0,0.08);
     margin-bottom:20px;
 }
 
+/* Table */
+
 .table-card{
     background:white;
-    border-radius:16px;
+    border-radius:20px;
     padding:20px;
-    margin-bottom:20px;
     box-shadow:0 4px 15px rgba(0,0,0,0.08);
     overflow-x:auto;
 }
@@ -96,13 +110,27 @@ button{
 #samplesTable td{
     padding:10px;
     border-top:1px solid #e5e7eb;
+    text-align:center;
 }
 
-#statusBox{
-    background:white;
-    border-radius:16px;
-    padding:15px;
-    text-align:left;
-    white-space:pre-wrap;
-    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+h3{
+    text-align:center;
+    margin:20px 0 10px;
+}
+
+/* Mobile */
+
+@media(max-width:900px){
+
+    .status-grid{
+        grid-template-columns:1fr;
+    }
+
+    .moisture-card h1{
+        font-size:60px;
+    }
+
+    .status-card button{
+        width:100px;
+    }
 }
