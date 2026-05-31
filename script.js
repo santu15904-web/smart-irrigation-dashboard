@@ -44,7 +44,7 @@ const moistureChart = new Chart(chartCtx, {
         scales: {
             y: {
                 min: 0,
-                max: 100
+                max: 110
             }
         }
     }
