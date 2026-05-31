@@ -108,6 +108,26 @@ body{
     width:auto;
     padding:10px 20px;
 }
+.chart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:20px;
+}
+
+.chart-header h3{
+    margin:0;
+}
+
+.tab-bar{
+    display:flex;
+    gap:8px;
+}
+
+.tab-bar button{
+    width:auto;
+    padding:8px 16px;
+}
 /* Chart */
 
 #moistureChart{
