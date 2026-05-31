@@ -129,6 +129,8 @@ ${data.last_seen}
     }
 
     const tbody = document.getElementById("samplesBody");
+    console.log("tbody =", tbody);
+    console.log("sampleHistory length =", sampleHistory.length);
 
     tbody.innerHTML = "";
 
