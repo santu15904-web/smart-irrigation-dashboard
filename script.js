@@ -66,9 +66,9 @@ const moistureChart = new Chart(chartCtx, {
 const irrigationRef = ref(db, "irrigation");
 async function loadHistory() {
 
-    sampleHistory = [];
-    timeHistory = [];
-    moistureHistory = [];
+    sampleHistory.length = 0;
+    timeHistory.length = 0;
+    moistureHistory.length = 0;
 
     const q = query(
         collection(firestore, "history"),
@@ -124,13 +124,13 @@ async function loadHistory() {
         "sampleHistory loaded:",
         sampleHistory.length
     );
-}
-moistureChart.update();
+    moistureChart.update();
 
-console.log(
-    "Chart history loaded:",
-    moistureHistory.length
-);
+    console.log(
+        "Chart history loaded:",
+        moistureHistory.length
+    );
+}
 loadHistory();
 
 onValue(irrigationRef, (snapshot) => {
