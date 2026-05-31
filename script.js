@@ -441,7 +441,7 @@ document.getElementById("liveTab")
     .addEventListener("click", () => {
 
         currentChartMode = "LIVE";
-
+        loadHistory();
         console.log("LIVE selected");
 
     });
