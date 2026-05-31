@@ -78,9 +78,31 @@ async function loadHistory() {
         "History records found:",
         querySnapshot.size
     );
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data());
-  });
+const tbody = document.getElementById("samplesBody");
+
+tbody.innerHTML = "";
+
+querySnapshot.forEach((doc) => {
+
+    const record = doc.data();
+
+    const timeString =
+        record.timestamp
+            .toDate()
+            .toLocaleTimeString();
+
+    tbody.innerHTML += `
+    <tr>
+        <td>${timeString}</td>
+        <td>${record.moisture}</td>
+        <td>${record.raw_adc}</td>
+        <td>${record.filtered_adc}</td>
+        <td>${record.pump}</td>
+        <td>${record.mode}</td>
+    </tr>
+    `;
+
+});
 
 }
 loadHistory();
