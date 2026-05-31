@@ -78,6 +78,9 @@ async function loadHistory() {
         "History records found:",
         querySnapshot.size
     );
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data());
+  });
 
 }
 loadHistory();
