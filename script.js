@@ -9,6 +9,13 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+import {
+  getFirestore,
+  collection,
+  addDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAQny_FSKK9hV2Mndn1VOokGW6oWPv_pDc",
   authDomain: "smart-irrigation-e9bba.firebaseapp.com",
@@ -22,6 +29,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const firestore = getFirestore(app);
 
 let moistureHistory = [];
 let timeHistory = [];
