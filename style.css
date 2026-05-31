@@ -141,7 +141,18 @@ h3{
     text-align:center;
     margin:20px 0 10px;
 }
+.events-card{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    margin-top:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
 
+#eventLog{
+    text-align:left;
+    line-height:1.8;
+}
 /* Mobile */
 
 @media(max-width:900px){
