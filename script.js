@@ -66,6 +66,20 @@ onValue(irrigationRef, (snapshot) => {
     const data = snapshot.val();
 
     if (!data) return;
+    addDoc(
+      collection(firestore, "history"),
+      {
+          moisture: data.moisture,
+          raw_adc: data.raw,
+          filtered_adc: data.filtered,
+          pump: data.pump ? "ON" : "OFF",
+          mode: data.mode,
+          state: data.state,
+          timestamp: new Date()
+      }
+  )
+  .then(() => console.log("Firestore write OK"))
+  .catch(err => console.error(err));
 
     /* Moisture */
 
