@@ -528,7 +528,10 @@ onValue(irrigationRef, (snapshot) => {
 });
 document.getElementById("liveTab")
     .addEventListener("click", () => {
-
+        document.getElementById(
+            "chartTitle"
+        ).innerHTML =
+            "📈 Moisture Trend - Live";
         currentChartMode = "LIVE";
         setActiveTab("liveTab");
         loadHistory();
@@ -538,7 +541,10 @@ document.getElementById("liveTab")
 
 document.getElementById("hourTab")
     .addEventListener("click", () => {
-
+        document.getElementById(
+          "chartTitle"
+      ).innerHTML =
+    "📈 Moisture Trend - 1 Hour";
         currentChartMode = "1H";
         setActiveTab("hourTab");
         load1HChart();
@@ -549,7 +555,10 @@ document.getElementById("hourTab")
 
 document.getElementById("dayTab")
     .addEventListener("click", () => {
-
+    document.getElementById(
+        "chartTitle"
+    ).innerHTML =
+        "📈 Moisture Trend - 24 Hours";
         currentChartMode = "24H";
         setActiveTab("dayTab");
         load24HChart();
@@ -560,7 +569,10 @@ document.getElementById("dayTab")
 
 document.getElementById("weekTab")
     .addEventListener("click", () => {
-
+      document.getElementById(
+          "chartTitle"
+      ).innerHTML =
+          "📈 Moisture Trend - 7 Days";
         currentChartMode = "7D";
         setActiveTab("weekTab");
         console.log("7D selected");
