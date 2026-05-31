@@ -124,3 +124,23 @@ button:hover{
     }
 
 }
+#samplesTable{
+    width:100%;
+    background:white;
+    border-radius:16px;
+    border-collapse:collapse;
+    overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom:20px;
+}
+
+#samplesTable th{
+    background:#f3f4f6;
+    padding:12px;
+    font-size:16px;
+}
+
+#samplesTable td{
+    padding:10px;
+    border-top:1px solid #e5e7eb;
+}
