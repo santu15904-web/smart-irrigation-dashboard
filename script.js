@@ -563,6 +563,24 @@ document.getElementById("weekTab")
         console.log("7D selected");
 
     });
+function setActiveTab(tabId) {
+
+    document.getElementById("liveTab")
+        .classList.remove("tab-active");
+
+    document.getElementById("hourTab")
+        .classList.remove("tab-active");
+
+    document.getElementById("dayTab")
+        .classList.remove("tab-active");
+
+    document.getElementById("weekTab")
+        .classList.remove("tab-active");
+
+    document.getElementById(tabId)
+        .classList.add("tab-active");
+
+}
 
 /* Controls */
 
