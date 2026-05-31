@@ -323,6 +323,94 @@ async function load1HChart() {
     );
 
 }
+async function load24HChart() {
+
+    console.log("Entering load24HChart");
+
+    const yesterday = new Date();
+
+    yesterday.setHours(
+        yesterday.getHours() - 24
+    );
+
+    const q = query(
+        collection(firestore, "history"),
+        where(
+            "timestamp",
+            ">=",
+            yesterday
+        )
+    );
+
+    const querySnapshot =
+        await getDocs(q);
+
+    timeHistory.length = 0;
+    moistureHistory.length = 0;
+
+    const buckets = {};
+
+    querySnapshot.forEach((doc) => {
+
+        const record = doc.data();
+
+        const dt =
+            record.timestamp.toDate();
+
+        const bucketKey =
+            dt.getHours()
+            .toString()
+            .padStart(2,"0")
+            + ":"
+            +
+            (
+                Math.floor(
+                    dt.getMinutes()/15
+                ) * 15
+            )
+            .toString()
+            .padStart(2,"0");
+
+        if (!buckets[bucketKey]) {
+
+            buckets[bucketKey] = {
+                sum:0,
+                count:0
+            };
+
+        }
+
+        buckets[bucketKey].sum +=
+            Number(record.moisture);
+
+        buckets[bucketKey].count++;
+
+    });
+
+    Object.keys(buckets)
+        .sort()
+        .forEach((key) => {
+
+            const avg =
+                buckets[key].sum /
+                buckets[key].count;
+
+            timeHistory.push(key);
+
+            moistureHistory.push(
+                avg.toFixed(1)
+            );
+
+        });
+
+    moistureChart.update();
+
+    console.log(
+        "24H chart loaded:",
+        moistureHistory.length
+    );
+
+}
 loadHistory();
 loadStatistics();
 loadEvents();
@@ -460,6 +548,8 @@ document.getElementById("dayTab")
     .addEventListener("click", () => {
 
         currentChartMode = "24H";
+
+        load24HChart();
 
         console.log("24H selected");
 
