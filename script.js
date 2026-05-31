@@ -65,6 +65,7 @@ const moistureChart = new Chart(chartCtx, {
 
 const irrigationRef = ref(db, "irrigation");
 async function loadHistory() {
+  sampleHistory = [];
 
     const q = query(
         collection(firestore, "history"),
@@ -85,6 +86,14 @@ tbody.innerHTML = "";
 querySnapshot.forEach((doc) => {
 
     const record = doc.data();
+    sampleHistory.push({
+    time: timeString,
+    moisture: record.moisture,
+    raw: record.raw_adc,
+    filtered: record.filtered_adc,
+    pump: record.pump,
+    mode: record.mode
+});
 
     const timeString =
         record.timestamp
