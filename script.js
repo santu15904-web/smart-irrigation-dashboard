@@ -25,6 +25,7 @@ const db = getDatabase(app);
 
 let moistureHistory = [];
 let timeHistory = [];
+let sampleHistory = [];
 
 const chartCtx = document.getElementById("moistureChart");
 
@@ -54,32 +55,32 @@ const irrigationRef = ref(db, "irrigation");
 
 onValue(irrigationRef, (snapshot) => {
 
-  const data = snapshot.val();
+    const data = snapshot.val();
 
-  if (!data) return;
+    if (!data) return;
 
-  document.getElementById("moisture").innerHTML =
-      data.moisture + "% 😊";
+    document.getElementById("moisture").innerHTML =
+        data.moisture + "% 😊";
 
-  document.getElementById("pump").innerHTML =
-      data.pump ? "ON" : "OFF";
+    document.getElementById("pump").innerHTML =
+        data.pump ? "ON" : "OFF";
 
-  document.getElementById("mode").innerHTML =
-      data.mode;
+    document.getElementById("mode").innerHTML =
+        data.mode;
 
-  document.getElementById("state").innerHTML =
-      data.state;
+    document.getElementById("state").innerHTML =
+        data.state;
 
-  document.getElementById("raw").innerHTML =
-      data.raw;
+    document.getElementById("raw").innerHTML =
+        data.raw;
 
-  document.getElementById("filtered").innerHTML =
-      data.filtered;
+    document.getElementById("filtered").innerHTML =
+        data.filtered;
 
-  document.getElementById("last_seen").innerHTML =
-      data.last_seen;
+    document.getElementById("last_seen").innerHTML =
+        data.last_seen;
 
-  document.getElementById("statusBox").textContent =
+    document.getElementById("statusBox").textContent =
 `
 Moisture : ${data.moisture} %
 
@@ -97,65 +98,97 @@ Last Seen:
 ${data.last_seen}
 `;
 
-  const now = new Date();
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
 
-  timeHistory.push(
-      now.toLocaleTimeString()
-  );
+    // Chart Data
 
-  moistureHistory.push(
-      data.moisture
-  );
+    timeHistory.push(timeString);
+    moistureHistory.push(data.moisture);
 
-  if (timeHistory.length > 20) {
-      timeHistory.shift();
-      moistureHistory.shift();
-  }
+    if (timeHistory.length > 20) {
+        timeHistory.shift();
+        moistureHistory.shift();
+    }
 
-  moistureChart.update();
+    moistureChart.update();
+
+    // Recent Samples Table
+
+    sampleHistory.unshift({
+        time: timeString,
+        moisture: data.moisture,
+        raw: data.raw,
+        filtered: data.filtered,
+        pump: data.pump ? "ON" : "OFF",
+        mode: data.mode
+    });
+
+    if (sampleHistory.length > 10) {
+        sampleHistory.pop();
+    }
+
+    const tbody = document.getElementById("samplesBody");
+
+    tbody.innerHTML = "";
+
+    sampleHistory.forEach(sample => {
+
+        tbody.innerHTML += `
+        <tr>
+            <td>${sample.time}</td>
+            <td>${sample.moisture}</td>
+            <td>${sample.raw}</td>
+            <td>${sample.filtered}</td>
+            <td>${sample.pump}</td>
+            <td>${sample.mode}</td>
+        </tr>
+        `;
+
+    });
 
 });
 
 window.pumpOn = function(){
 
-  update(
-    ref(db, "commands"),
-    {
-      pump: "ON"
-    }
-  );
+    update(
+        ref(db, "commands"),
+        {
+            pump: "ON"
+        }
+    );
 
 }
 
 window.pumpOff = function(){
 
-  update(
-    ref(db, "commands"),
-    {
-      pump: "OFF"
-    }
-  );
+    update(
+        ref(db, "commands"),
+        {
+            pump: "OFF"
+        }
+    );
 
 }
 
 window.autoMode = function(){
 
-  update(
-    ref(db, "commands"),
-    {
-      mode: "AUTO"
-    }
-  );
+    update(
+        ref(db, "commands"),
+        {
+            mode: "AUTO"
+        }
+    );
 
 }
 
 window.manualMode = function(){
 
-  update(
-    ref(db, "commands"),
-    {
-      mode: "MANUAL"
-    }
-  );
+    update(
+        ref(db, "commands"),
+        {
+            mode: "MANUAL"
+        }
+    );
 
 }
