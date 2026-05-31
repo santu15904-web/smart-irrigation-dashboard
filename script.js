@@ -23,6 +23,33 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+let moistureHistory = [];
+let timeHistory = [];
+
+const chartCtx = document.getElementById("moistureChart");
+
+const moistureChart = new Chart(chartCtx, {
+    type: "line",
+    data: {
+        labels: timeHistory,
+        datasets: [{
+            label: "Moisture %",
+            data: moistureHistory,
+            tension: 0.3
+        }]
+    },
+    options: {
+        responsive: true,
+        animation: false,
+        scales: {
+            y: {
+                min: 0,
+                max: 100
+            }
+        }
+    }
+});
+
 const irrigationRef = ref(db, "irrigation");
 
 onValue(irrigationRef, (snapshot) => {
@@ -69,6 +96,23 @@ Filtered : ${data.filtered}
 Last Seen:
 ${data.last_seen}
 `;
+
+  const now = new Date();
+
+  timeHistory.push(
+      now.toLocaleTimeString()
+  );
+
+  moistureHistory.push(
+      data.moisture
+  );
+
+  if (timeHistory.length > 20) {
+      timeHistory.shift();
+      moistureHistory.shift();
+  }
+
+  moistureChart.update();
 
 });
 
