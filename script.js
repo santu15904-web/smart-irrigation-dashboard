@@ -38,6 +38,7 @@ const firestore = getFirestore(app);
 let moistureHistory = [];
 let timeHistory = [];
 let sampleHistory = [];
+let lastLoggedTimestamp = "";
 
 const chartCtx = document.getElementById("moistureChart");
 
@@ -141,22 +142,28 @@ onValue(irrigationRef, (snapshot) => {
     console.log("last_seen =", data.last_seen);
     console.log("Realtime DB callback fired");
 
+    if (data.last_seen !== lastLoggedTimestamp) {
+
+    lastLoggedTimestamp = data.last_seen;
+
     console.log("About to write Firestore");
 
-addDoc(
-    collection(firestore, "history"),
-    {
-        moisture: data.moisture,
-        raw_adc: data.raw,
-        filtered_adc: data.filtered,
-        pump: data.pump ? "ON" : "OFF",
-        mode: data.mode,
-        state: data.state,
-        timestamp: new Date()
-    }
-)
-.then(() => console.log("Firestore write OK"))
-.catch(err => console.error("Firestore error:", err));
+    addDoc(
+        collection(firestore, "history"),
+        {
+            moisture: data.moisture,
+            raw_adc: data.raw,
+            filtered_adc: data.filtered,
+            pump: data.pump ? "ON" : "OFF",
+            mode: data.mode,
+            state: data.state,
+            timestamp: new Date()
+        }
+    )
+    .then(() => console.log("Firestore write OK"))
+    .catch(err => console.error("Firestore error:", err));
+
+}
 
     /* Moisture */
 
