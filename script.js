@@ -12,7 +12,11 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import {
   getFirestore,
   collection,
-  addDoc
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+  limit
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
