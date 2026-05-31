@@ -16,7 +16,8 @@ import {
   getDocs,
   query,
   orderBy,
-  limit
+  limit,
+  where
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -132,7 +133,79 @@ async function loadHistory() {
         moistureHistory.length
     );
 }
+async function loadStatistics() {
+
+    const yesterday = new Date();
+
+    yesterday.setHours(
+        yesterday.getHours() - 24
+    );
+
+    const q = query(
+        collection(firestore, "history"),
+        where(
+            "timestamp",
+            ">=",
+            yesterday
+        )
+    );
+
+    const querySnapshot =
+        await getDocs(q);
+
+    let count = 0;
+    let sum = 0;
+    let min = 999;
+    let max = -999;
+
+    querySnapshot.forEach((doc) => {
+
+        const record = doc.data();
+
+        const moisture =
+            Number(record.moisture);
+
+        sum += moisture;
+
+        if (moisture < min)
+            min = moisture;
+
+        if (moisture > max)
+            max = moisture;
+
+        count++;
+
+    });
+
+    if (count === 0) return;
+
+    const avg =
+        (sum / count).toFixed(1);
+
+    document.getElementById(
+        "avgMoisture"
+    ).innerHTML = avg + "%";
+
+    document.getElementById(
+        "minMoisture"
+    ).innerHTML = min + "%";
+
+    document.getElementById(
+        "maxMoisture"
+    ).innerHTML = max + "%";
+
+    document.getElementById(
+        "sampleCount"
+    ).innerHTML = count;
+
+    console.log(
+        "Statistics loaded:",
+        count,
+        "samples"
+    );
+}
 loadHistory();
+loadStatistics();
 
 onValue(irrigationRef, (snapshot) => {
 
