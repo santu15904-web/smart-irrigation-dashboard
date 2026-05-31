@@ -67,8 +67,8 @@ onValue(irrigationRef, (snapshot) => {
 
     if (!data) return;
     console.log("Realtime DB callback fired");
+    console.log("About to write Firestore");
     addDoc(
-      console.log("About to write Firestore");
       collection(firestore, "history"),
       {
           moisture: data.moisture,
