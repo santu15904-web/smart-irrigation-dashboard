@@ -412,6 +412,7 @@ async function load24HChart() {
 
 }
 loadHistory();
+setActiveTab("liveTab");
 loadStatistics();
 loadEvents();
 
@@ -529,6 +530,7 @@ document.getElementById("liveTab")
     .addEventListener("click", () => {
 
         currentChartMode = "LIVE";
+        setActiveTab("liveTab");
         loadHistory();
         console.log("LIVE selected");
 
@@ -538,6 +540,7 @@ document.getElementById("hourTab")
     .addEventListener("click", () => {
 
         currentChartMode = "1H";
+        setActiveTab("hourTab");
         load1HChart();
 
         console.log("1H selected");
@@ -548,7 +551,7 @@ document.getElementById("dayTab")
     .addEventListener("click", () => {
 
         currentChartMode = "24H";
-
+        setActiveTab("dayTab");
         load24HChart();
 
         console.log("24H selected");
@@ -559,7 +562,7 @@ document.getElementById("weekTab")
     .addEventListener("click", () => {
 
         currentChartMode = "7D";
-
+        setActiveTab("weekTab");
         console.log("7D selected");
 
     });
