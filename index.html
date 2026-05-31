@@ -21,18 +21,6 @@
         <p><b>State:</b> <span id="state">IDLE</span></p>
     </div>
 
-    <div class="buttons">
-
-        <button onclick="pumpOn()">ON</button>
-        <button onclick="pumpOff()">OFF</button>
-
-        <br><br>
-
-        <button onclick="autoMode()">AUTO</button>
-        <button onclick="manualMode()">MANUAL</button>
-
-    </div>
-
     <div class="telemetry">
 
         <p><b>Raw ADC:</b> <span id="raw">--</span></p>
@@ -47,6 +35,39 @@
 
     <canvas id="moistureChart"></canvas>
 
+    <h3>📋 Recent Samples</h3>
+
+    <table id="samplesTable">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Moisture</th>
+                <th>Raw</th>
+                <th>Filtered</th>
+                <th>Pump</th>
+                <th>Mode</th>
+            </tr>
+        </thead>
+
+        <tbody id="samplesBody">
+            <tr>
+                <td colspan="6">Waiting for data...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="buttons">
+
+        <button onclick="pumpOn()">ON</button>
+        <button onclick="pumpOff()">OFF</button>
+
+        <br><br>
+
+        <button onclick="autoMode()">AUTO</button>
+        <button onclick="manualMode()">MANUAL</button>
+
+    </div>
+
     <h3>📊 Live Status</h3>
 
     <pre id="statusBox">
@@ -55,10 +76,7 @@ Waiting for Firebase...
 
 </div>
 
-<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- Your App -->
 <script type="module" src="script.js"></script>
 
 </body>
