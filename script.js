@@ -59,8 +59,25 @@ onValue(irrigationRef, (snapshot) => {
 
     if (!data) return;
 
+    /* Moisture */
+
     document.getElementById("moisture").innerHTML =
-        data.moisture + "% 😊";
+        data.moisture + "%";
+
+    /* Emoji */
+
+    let emoji = "😊";
+
+    if (data.moisture < 40) {
+        emoji = "😡";
+    }
+    else if (data.moisture < 70) {
+        emoji = "😐";
+    }
+
+    document.getElementById("emoji").innerHTML = emoji;
+
+    /* Status Cards */
 
     document.getElementById("pump").innerHTML =
         data.pump ? "ON" : "OFF";
@@ -71,37 +88,10 @@ onValue(irrigationRef, (snapshot) => {
     document.getElementById("state").innerHTML =
         data.state;
 
-    document.getElementById("raw").innerHTML =
-        data.raw;
-
-    document.getElementById("filtered").innerHTML =
-        data.filtered;
-
-    document.getElementById("last_seen").innerHTML =
-        data.last_seen;
-
-    document.getElementById("statusBox").textContent =
-`
-Moisture : ${data.moisture} %
-
-Pump     : ${data.pump ? "ON" : "OFF"}
-
-Mode     : ${data.mode}
-
-State    : ${data.state}
-
-Raw ADC  : ${data.raw}
-
-Filtered : ${data.filtered}
-
-Last Seen:
-${data.last_seen}
-`;
+    /* Chart */
 
     const now = new Date();
     const timeString = now.toLocaleTimeString();
-
-    // Chart Data
 
     timeHistory.push(timeString);
     moistureHistory.push(data.moisture);
@@ -113,7 +103,7 @@ ${data.last_seen}
 
     moistureChart.update();
 
-    // Recent Samples Table
+    /* Recent Samples Table */
 
     sampleHistory.unshift({
         time: timeString,
@@ -129,8 +119,6 @@ ${data.last_seen}
     }
 
     const tbody = document.getElementById("samplesBody");
-    console.log("tbody =", tbody);
-    console.log("sampleHistory length =", sampleHistory.length);
 
     tbody.innerHTML = "";
 
@@ -150,6 +138,8 @@ ${data.last_seen}
     });
 
 });
+
+/* Controls */
 
 window.pumpOn = function(){
 
