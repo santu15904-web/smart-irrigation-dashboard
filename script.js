@@ -279,7 +279,7 @@ async function loadEvents() {
 
 }
 async function load1HChart() {
-
+    console.log("Entering load1HChart");
     const q = query(
         collection(firestore, "history"),
         orderBy("timestamp", "desc"),
@@ -450,6 +450,7 @@ document.getElementById("hourTab")
     .addEventListener("click", () => {
 
         currentChartMode = "1H";
+        await load1HChart();
 
         console.log("1H selected");
 
