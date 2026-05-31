@@ -450,7 +450,7 @@ document.getElementById("hourTab")
     .addEventListener("click", () => {
 
         currentChartMode = "1H";
-        await load1HChart();
+        load1HChart();
 
         console.log("1H selected");
 
