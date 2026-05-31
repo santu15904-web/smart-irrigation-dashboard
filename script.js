@@ -646,7 +646,6 @@ document.getElementById("dayTab")
         currentChartMode = "24H";
         setActiveTab("dayTab");
         load24HChart();
-
         console.log("24H selected");
 
     });
