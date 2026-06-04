@@ -43,7 +43,7 @@ let lastLoggedTimestamp = "";
 let currentChartMode = "LIVE";
 
 const chartCtx = document.getElementById("moistureChart");
-
+console.log("New Versioin of Chart Loaded");
 const moistureChart = new Chart(chartCtx, {
 
     type: "line",
@@ -55,19 +55,12 @@ const moistureChart = new Chart(chartCtx, {
             label: "Moisture %",
             data: moistureHistory,
             borderColor: "#22d3ee",
-            backgroundColor: function(context) {
-                const chart = context.chart;
-                const { ctx, chartArea } = chart;
-                if (!chartArea) return "transparent";
-                const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                gradient.addColorStop(0, "rgba(34,211,238,0.15)");
-                gradient.addColorStop(1, "rgba(34,211,238,0.00)");
-                return gradient;
-            },
+            backgroundColor: "transparent",
             borderWidth: 2.5,
             tension: 0.4,
-            fill: true,
-            pointRadius: 0,
+            fill: false,
+            pointRadius: 2,
+            pointBackgroundColor: "#22d3ee",
             pointHoverRadius: 6,
             pointHoverBackgroundColor: "#22d3ee",
             pointHoverBorderColor: "#fff",
@@ -78,8 +71,8 @@ const moistureChart = new Chart(chartCtx, {
             label: "Threshold",
             data: [],
             borderColor: "rgba(251,113,133,0.85)",
-            borderWidth: 2,
-            borderDash: [8, 5],
+            borderWidth: 1.5,
+            borderDash: [6, 4],
             pointRadius: 0,
             fill: false,
             tension: 0
@@ -99,15 +92,15 @@ const moistureChart = new Chart(chartCtx, {
         plugins: {
             legend: {
                 labels: {
-                    color: "#94a3b8",
-                    font: { size: 12, family: "monospace" },
-                    boxWidth: 24,
+                    color: "#64748b",
+                    font: { size: 12 },
+                    boxWidth: 20,
                     padding: 16
                 }
             },
             tooltip: {
                 enabled: true,
-                backgroundColor: "rgba(15,23,42,0.92)",
+                backgroundColor: "rgba(15,23,42,0.90)",
                 titleColor: "#22d3ee",
                 bodyColor: "#e2e8f0",
                 borderColor: "#22d3ee",
@@ -126,12 +119,15 @@ const moistureChart = new Chart(chartCtx, {
                 min: 0,
                 max: 100,
                 grid: {
-                    color: "rgba(100,116,139,0.15)",
+                    color: "rgba(100,116,139,0.12)",
                     drawBorder: false
+                },
+                border: {
+                    dash: [4, 4]
                 },
                 ticks: {
                     color: "#64748b",
-                    font: { size: 11, family: "monospace" },
+                    font: { size: 11 },
                     stepSize: 20,
                     callback: function(val) { return val + "%"; }
                 }
@@ -144,7 +140,7 @@ const moistureChart = new Chart(chartCtx, {
                 ticks: {
                     maxTicksLimit: 8,
                     color: "#64748b",
-                    font: { size: 10, family: "monospace" }
+                    font: { size: 10 }
                 }
             }
         }
