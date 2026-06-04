@@ -42,110 +42,112 @@ let sampleHistory = [];
 let lastLoggedTimestamp = "";
 let currentChartMode = "LIVE";
 
-const chartCtx = document.getElementById("moistureChart");
-console.log("New Versioin of Chart Loaded");
-const moistureChart = new Chart(chartCtx, {
+const moistureChart =
+    echarts.init(
+        document.getElementById(
+            "moistureChart"
+        )
+    );
 
-    type: "line",
+function updateChart() {
+    console.log("new chart loaded");
+    moistureChart.setOption({
 
-    data: {
-        labels: timeHistory,
-        datasets: [
+        tooltip: {
+            trigger: "axis"
+        },
+
+        legend: {
+            data: [
+                "Moisture",
+                "Threshold"
+            ]
+        },
+
+        grid: {
+            left: 60,
+            right: 20,
+            top: 50,
+            bottom: 60
+        },
+
+        xAxis: {
+
+            type: "category",
+
+            data: timeHistory,
+
+            axisLabel: {
+
+                rotate: 45
+
+            }
+
+        },
+
+        yAxis: {
+
+            type: "value",
+
+            min: 60,
+
+            max: 100,
+
+            name: "Moisture %"
+
+        },
+
+        series: [
+
         {
-            label: "Moisture %",
+
+            name: "Moisture",
+
+            type: "line",
+
+            smooth: true,
+
+            symbol: "circle",
+
+            symbolSize: 8,
+
             data: moistureHistory,
-            borderColor: "#22d3ee",
-            backgroundColor: "transparent",
-            borderWidth: 2.5,
-            tension: 0.4,
-            fill: false,
-            pointRadius: 2,
-            pointBackgroundColor: "#22d3ee",
-            pointHoverRadius: 6,
-            pointHoverBackgroundColor: "#22d3ee",
-            pointHoverBorderColor: "#fff",
-            pointHoverBorderWidth: 2,
-            pointHitRadius: 20
+
+            lineStyle: {
+
+                width: 4
+
+            }
+
         },
+
         {
-            label: "Threshold",
-            data: [],
-            borderColor: "rgba(251,113,133,0.85)",
-            borderWidth: 1.5,
-            borderDash: [6, 4],
-            pointRadius: 0,
-            fill: false,
-            tension: 0
-        }]
-    },
 
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: false,
+            name: "Threshold",
 
-        interaction: {
-            mode: "nearest",
-            intersect: false
-        },
+            type: "line",
 
-        plugins: {
-            legend: {
-                labels: {
-                    color: "#64748b",
-                    font: { size: 12 },
-                    boxWidth: 20,
-                    padding: 16
-                }
+            data: new Array(
+                moistureHistory.length
+            ).fill(80),
+
+            lineStyle: {
+
+                type: "dashed",
+
+                width: 2
+
             },
-            tooltip: {
-                enabled: true,
-                backgroundColor: "rgba(15,23,42,0.90)",
-                titleColor: "#22d3ee",
-                bodyColor: "#e2e8f0",
-                borderColor: "#22d3ee",
-                borderWidth: 1,
-                padding: 10,
-                callbacks: {
-                    label: function(ctx) {
-                        return " Moisture: " + ctx.parsed.y + "%";
-                    }
-                }
-            }
-        },
 
-        scales: {
-            y: {
-                min: 0,
-                max: 100,
-                grid: {
-                    color: "rgba(100,116,139,0.12)",
-                    drawBorder: false
-                },
-                border: {
-                    dash: [4, 4]
-                },
-                ticks: {
-                    color: "#64748b",
-                    font: { size: 11 },
-                    stepSize: 20,
-                    callback: function(val) { return val + "%"; }
-                }
-            },
-            x: {
-                grid: {
-                    color: "rgba(100,116,139,0.08)",
-                    drawBorder: false
-                },
-                ticks: {
-                    maxTicksLimit: 8,
-                    color: "#64748b",
-                    font: { size: 10 }
-                }
-            }
+            symbol: "none"
+
         }
-    }
-});
+
+        ]
+
+    });
+
+}
 
 const irrigationRef = ref(db, "irrigation");
 
@@ -210,7 +212,7 @@ async function loadHistory() {
         sampleHistory.length
     );
     moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
-    moistureChart.update();
+    updateChart();
 
     console.log(
         "Chart history loaded:",
@@ -402,7 +404,7 @@ async function load1HChart() {
     });
 
     moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
-    moistureChart.update();
+    updateChart();
 
     console.log(
         "1H chart loaded:",
@@ -492,7 +494,7 @@ async function load24HChart() {
         });
 
     moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
-    moistureChart.update();
+    updateChart();
 
     console.log(
         "24H chart loaded:",
@@ -578,7 +580,7 @@ async function load7DChart() {
         });
 
     moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
-    moistureChart.update();
+    updateChart();
 
     console.log(
         "7D chart loaded:",
@@ -666,7 +668,7 @@ onValue(irrigationRef, (snapshot) => {
     }
 
     moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
-    moistureChart.update();
+    updateChart();
 
     /* Recent Samples Table */
 
