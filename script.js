@@ -44,7 +44,6 @@ let currentChartMode = "LIVE";
 
 const chartCtx = document.getElementById("moistureChart");
 
-
 const moistureChart = new Chart(chartCtx, {
 
     type: "line",
@@ -55,20 +54,35 @@ const moistureChart = new Chart(chartCtx, {
         {
             label: "Moisture %",
             data: moistureHistory,
-            borderWidth: 4,
-            tension: 0.35,
-            fill: false,
+            borderColor: "#22d3ee",
+            backgroundColor: function(context) {
+                const chart = context.chart;
+                const { ctx, chartArea } = chart;
+                if (!chartArea) return "transparent";
+                const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                gradient.addColorStop(0, "rgba(34,211,238,0.35)");
+                gradient.addColorStop(1, "rgba(34,211,238,0.00)");
+                return gradient;
+            },
+            borderWidth: 3,
+            tension: 0.4,
+            fill: true,
             pointRadius: 0,
-            pointHoverRadius: 8,
+            pointHoverRadius: 6,
+            pointHoverBackgroundColor: "#22d3ee",
+            pointHoverBorderColor: "#fff",
+            pointHoverBorderWidth: 2,
             pointHitRadius: 20
         },
         {
             label: "Threshold",
             data: [],
+            borderColor: "rgba(251,113,133,0.85)",
             borderWidth: 2,
-            borderDash: [8,6],
+            borderDash: [8, 5],
             pointRadius: 0,
-            fill: false
+            fill: false,
+            tension: 0
         }]
     },
 
@@ -83,19 +97,53 @@ const moistureChart = new Chart(chartCtx, {
         },
 
         plugins: {
+            legend: {
+                labels: {
+                    color: "#94a3b8",
+                    font: { size: 12, family: "monospace" },
+                    boxWidth: 24,
+                    padding: 16
+                }
+            },
             tooltip: {
-                enabled: true
+                enabled: true,
+                backgroundColor: "rgba(15,23,42,0.92)",
+                titleColor: "#22d3ee",
+                bodyColor: "#e2e8f0",
+                borderColor: "#22d3ee",
+                borderWidth: 1,
+                padding: 10,
+                callbacks: {
+                    label: function(ctx) {
+                        return " Moisture: " + ctx.parsed.y + "%";
+                    }
+                }
             }
         },
 
         scales: {
             y: {
                 min: 60,
-                max: 100
+                max: 100,
+                grid: {
+                    color: "rgba(148,163,184,0.10)",
+                    drawBorder: false
+                },
+                ticks: {
+                    color: "#94a3b8",
+                    font: { size: 11, family: "monospace" },
+                    callback: function(val) { return val + "%"; }
+                }
             },
             x: {
+                grid: {
+                    color: "rgba(148,163,184,0.06)",
+                    drawBorder: false
+                },
                 ticks: {
-                    maxTicksLimit: 10
+                    maxTicksLimit: 10,
+                    color: "#94a3b8",
+                    font: { size: 10, family: "monospace" }
                 }
             }
         }
@@ -103,6 +151,7 @@ const moistureChart = new Chart(chartCtx, {
 });
 
 const irrigationRef = ref(db, "irrigation");
+
 async function loadHistory() {
 
     sampleHistory.length = 0;
@@ -171,6 +220,7 @@ async function loadHistory() {
         moistureHistory.length
     );
 }
+
 async function loadStatistics() {
 
     const yesterday = new Date();
@@ -242,6 +292,7 @@ async function loadStatistics() {
         "samples"
     );
 }
+
 async function loadEvents() {
 
     const q = query(
@@ -315,6 +366,7 @@ async function loadEvents() {
         events.reverse().join("<br>");
 
 }
+
 async function load1HChart() {
     console.log("Entering load1HChart");
     const q = query(
@@ -361,6 +413,7 @@ async function load1HChart() {
     );
 
 }
+
 async function load24HChart() {
 
     console.log("Entering load24HChart");
@@ -450,6 +503,7 @@ async function load24HChart() {
     );
 
 }
+
 async function load7DChart() {
 
     console.log("Entering load7DChart");
@@ -535,6 +589,7 @@ async function load7DChart() {
     );
 
 }
+
 loadHistory();
 setActiveTab("liveTab");
 loadStatistics();
@@ -651,6 +706,7 @@ onValue(irrigationRef, (snapshot) => {
     });
 
 });
+
 document.getElementById("liveTab")
     .addEventListener("click", () => {
         document.getElementById(
@@ -707,6 +763,7 @@ document.getElementById("weekTab")
         console.log("7D selected");
 
     });
+
 function setActiveTab(tabId) {
 
     document.getElementById("liveTab")
