@@ -44,52 +44,58 @@ let currentChartMode = "LIVE";
 
 const chartCtx = document.getElementById("moistureChart");
 
+
 const moistureChart = new Chart(chartCtx, {
+
     type: "line",
+
     data: {
         labels: timeHistory,
-        datasets: [{
+        datasets: [
+        {
             label: "Moisture %",
             data: moistureHistory,
-            tension: 0.45,
-            fill: true,
-            borderWidth: 3,
-            pointRadius: 2,
-            pointHoverRadius: 8
+            borderWidth: 4,
+            tension: 0.35,
+            fill: false,
+            pointRadius: 0,
+            pointHoverRadius: 8,
+            pointHitRadius: 20
+        },
+        {
+            label: "Threshold",
+            data: [],
+            borderWidth: 2,
+            borderDash: [8,6],
+            pointRadius: 0,
+            fill: false
         }]
     },
+
     options: {
         responsive: true,
         maintainAspectRatio: false,
         animation: false,
+
         interaction: {
-            intersect: false,
-            mode: "index"
+            mode: "nearest",
+            intersect: false
         },
+
         plugins: {
-            legend: { display: true },
             tooltip: {
-                enabled: true,
-                callbacks: {
-                    label: function(context) {
-                        return "Moisture: " + context.parsed.y + "%";
-                    }
-                }
+                enabled: true
             }
         },
+
         scales: {
             y: {
-                suggestedMin: 60,
-                suggestedMax: 100,
-                title: {
-                    display: true,
-                    text: "Moisture (%)"
-                }
+                min: 60,
+                max: 100
             },
             x: {
-                title: {
-                    display: true,
-                    text: "Time"
+                ticks: {
+                    maxTicksLimit: 10
                 }
             }
         }
@@ -157,6 +163,7 @@ async function loadHistory() {
         "sampleHistory loaded:",
         sampleHistory.length
     );
+    moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
     moistureChart.update();
 
     console.log(
@@ -345,6 +352,7 @@ async function load1HChart() {
 
     });
 
+    moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
     moistureChart.update();
 
     console.log(
@@ -433,6 +441,7 @@ async function load24HChart() {
 
         });
 
+    moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
     moistureChart.update();
 
     console.log(
@@ -517,6 +526,7 @@ async function load7DChart() {
 
         });
 
+    moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
     moistureChart.update();
 
     console.log(
@@ -603,6 +613,7 @@ onValue(irrigationRef, (snapshot) => {
         moistureHistory.shift();
     }
 
+    moistureChart.data.datasets[1].data = new Array(timeHistory.length).fill(80);
     moistureChart.update();
 
     /* Recent Samples Table */
@@ -760,4 +771,3 @@ window.manualMode = function(){
     );
 
 }
-
