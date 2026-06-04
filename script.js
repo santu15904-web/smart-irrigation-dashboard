@@ -760,3 +760,4 @@ window.manualMode = function(){
     );
 
 }
+
