@@ -51,16 +51,46 @@ const moistureChart = new Chart(chartCtx, {
         datasets: [{
             label: "Moisture %",
             data: moistureHistory,
-            tension: 0.3
+            tension: 0.45,
+            fill: true,
+            borderWidth: 3,
+            pointRadius: 2,
+            pointHoverRadius: 8
         }]
     },
     options: {
         responsive: true,
+        maintainAspectRatio: false,
         animation: false,
+        interaction: {
+            intersect: false,
+            mode: "index"
+        },
+        plugins: {
+            legend: { display: true },
+            tooltip: {
+                enabled: true,
+                callbacks: {
+                    label: function(context) {
+                        return "Moisture: " + context.parsed.y + "%";
+                    }
+                }
+            }
+        },
         scales: {
             y: {
-                min: 0,
-                max: 110
+                suggestedMin: 60,
+                suggestedMax: 100,
+                title: {
+                    display: true,
+                    text: "Moisture (%)"
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: "Time"
+                }
             }
         }
     }
@@ -568,7 +598,7 @@ onValue(irrigationRef, (snapshot) => {
     timeHistory.push(timeString);
     moistureHistory.push(data.moisture);
 
-    if (timeHistory.length > 20) {
+    if (timeHistory.length > 100) {
         timeHistory.shift();
         moistureHistory.shift();
     }
