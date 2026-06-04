@@ -60,11 +60,11 @@ const moistureChart = new Chart(chartCtx, {
                 const { ctx, chartArea } = chart;
                 if (!chartArea) return "transparent";
                 const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-                gradient.addColorStop(0, "rgba(34,211,238,0.35)");
+                gradient.addColorStop(0, "rgba(34,211,238,0.15)");
                 gradient.addColorStop(1, "rgba(34,211,238,0.00)");
                 return gradient;
             },
-            borderWidth: 3,
+            borderWidth: 2.5,
             tension: 0.4,
             fill: true,
             pointRadius: 0,
@@ -123,26 +123,27 @@ const moistureChart = new Chart(chartCtx, {
 
         scales: {
             y: {
-                min: 60,
+                min: 0,
                 max: 100,
                 grid: {
-                    color: "rgba(148,163,184,0.10)",
+                    color: "rgba(100,116,139,0.15)",
                     drawBorder: false
                 },
                 ticks: {
-                    color: "#94a3b8",
+                    color: "#64748b",
                     font: { size: 11, family: "monospace" },
+                    stepSize: 20,
                     callback: function(val) { return val + "%"; }
                 }
             },
             x: {
                 grid: {
-                    color: "rgba(148,163,184,0.06)",
+                    color: "rgba(100,116,139,0.08)",
                     drawBorder: false
                 },
                 ticks: {
-                    maxTicksLimit: 10,
-                    color: "#94a3b8",
+                    maxTicksLimit: 8,
+                    color: "#64748b",
                     font: { size: 10, family: "monospace" }
                 }
             }
